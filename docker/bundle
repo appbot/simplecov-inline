@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# https://gist.github.com/vncsna/64825d5609c146e80de8b1fd623011ca
+set -euo pipefail
+
+echo '[docker container]'
+
+docker compose run --rm simplecov-inline bundle $*
