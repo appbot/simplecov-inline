@@ -5,3 +5,5 @@ services:
     volumes:
       - .:/app
       - ${APPBOT_TOOL_FRIENDLY_HOST:-/dev/null}:${APPBOT_TOOL_FRIENDLY_CONTAINER:-/dev/null} # see usage in .env_example file
+    env_file:
+      - .env
