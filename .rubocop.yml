@@ -1,13 +1,138 @@
+require:
+- rubocop-rspec
+
 AllCops:
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 3.1
+  Exclude:
+    - 'bin/*'
+    - 'vendor/bundle/**/*'
+  NewCops: enable
+  SuggestExtensions: false
 
-Style/StringLiterals:
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
   Enabled: true
-  EnforcedStyle: double_quotes
+  AutoCorrect: true
 
-Style/StringLiteralsInInterpolation:
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
   Enabled: true
-  EnforcedStyle: double_quotes
+  AutoCorrect: true
 
-Layout/LineLength:
-  Max: 120
+# Indent based on the start of the line, not based on the preceeding line. Reduces line length.
+# https://docs.rubocop.org/rubocop/cops_layout.html#layoutmultilinemethodcallindentation
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+# Indent based on the start of the line, not based on the preceeding line. Reduces line length.
+# https://docs.rubocop.org/rubocop/cops_layout.html#layoutargumentalignment
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+# https://docs.rubocop.org/rubocop/cops_layout.html#layoutspaceinsidehashliteralbraces
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+# We have a mix of both and this one seems of limited value.
+# variable_1 and variable1 usages.
+# https://docs.rubocop.org/rubocop/cops_naming.html#namingvariablenumber
+Naming/VariableNumber:
+  Enabled: false
+
+# When enabled this requires a documentation comment at the top of every class, which feels very anti-rails
+Style/Documentation:
+  Enabled: false
+
+# This is default for rubocop because frozen literals were going to become the default in ruby 3.0 (unless disabled with the comment).
+# That did not come to pass however: https://bugs.ruby-lang.org/issues/11473#note-53
+# Also it seems even if it did, there is not a huge performance benefit: https://bugs.ruby-lang.org/issues/11473#note-59
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: never
+  SafeAutoCorrect: true
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+
+# This makes no sense in the context of RSpec where the whole spec is defined as a block
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/MethodLength:
+  CountAsOne: ['array', 'hash', 'heredoc']
+
+# We have a bunch of code that uses the nested style for definitions, but we only access classes using the fully qualified style in new
+# code to make things easier to grep for/tell at a glance which actual class is being used. Going forward it would be nice to fully
+# qualify the definitions as well for easier readability/grepability/refactorability
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+# We use this a lot and I could see no explicit benefit to the alternate form: expect { run }.to change(Foo, :bar)
+RSpec/ExpectChange:
+  EnforcedStyle: block
+
+# Enforces that context strings start with when, with, without.
+# We have a lot of violations and vcr cassettes dependent on this.
+RSpec/ContextWording:
+  Enabled: false
+
+# Enforces that example/it strings do not start with should or it.
+# We have a lot of violations and vcr cassettes dependent on this.
+RSpec/ExampleWording:
+  Enabled: false
+
+# We prefer `describe '#method_name' do` in a unit test style similar to:
+# https://www.betterspecs.org/#describe
+#
+# Because of this we think that using `expect(subject).to eq(123)`:
+# - saves an extra mental lookup when compared with having a named subject.
+# - reduces friction when renaming and refactoring
+#
+# The default for RSpec/NamedSubject assumes a more behavioral style like the rspec docs:
+# https://rspec.info/features/3-12/rspec-core/example-groups/basic-structure/
+#
+# Configure this cop to allow nameless subjects but only enforce that if a subject is named, the name must be used in assertions.
+# This prevents usages like:
+#
+# subject(:x) { ... }
+# subject(:y) { ... }
+# it { is_expected.to eq(123) } # asserts on :y only because it is defined last
+#
+RSpec/NamedSubject:
+  EnforcedStyle: named_only
+
+# We prefer `describe '#method_name' do` in a unit test style similar to:
+# https://www.betterspecs.org/#describe
+#
+# The default for RSpec/NestedGroups assumes a more behavioral style like the rspec docs:
+# https://rspec.info/features/3-12/rspec-core/example-groups/basic-structure/
+#
+# Configure this cop so the Max is the 3 to allow `describe '#method_name do` blocks but keeping it flat within them.
+#
+# Example with nesting levels:
+#
+# RSpec.describe TheClass do   # 1
+#   describe '#the_method' do  # 2
+#     context 'context A' do   # 3
+#       it 'does things' do
+#       end
+#     end
+#     context 'context B' do   # 3
+#       it 'does things' do
+#       end
+#     end
+#   end
+# end
+#
+RSpec/NestedGroups:
+  # Note that at time of writing 3 is the default but set explicitly anyways as documentation since it caused us some confusion.
+  Max: 3
+
+RSpec/ExampleLength:
+  CountAsOne: ['array', 'heredoc', 'method_call']

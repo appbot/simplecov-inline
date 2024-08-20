@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-require_relative "inline/version"
+require_relative 'inline/version'
 
 module Simplecov
   module Inline
