@@ -1,6 +1,6 @@
 require_relative 'inline/version'
 
-module Simplecov
+module SimpleCov
   module Inline
     class Error < StandardError; end
     # Your code goes here...

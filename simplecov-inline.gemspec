@@ -2,7 +2,7 @@ require_relative 'lib/simplecov/inline/version'
 
 Gem::Specification.new do |spec|
   spec.name = 'simplecov-inline'
-  spec.version = Simplecov::Inline::VERSION
+  spec.version = SimpleCov::Inline::VERSION
   spec.authors = ['tris']
   spec.email = ['developers@appbot.co']
 

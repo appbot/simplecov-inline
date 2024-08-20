@@ -1,4 +1,4 @@
-module Simplecov
+module SimpleCov
   module Inline
     VERSION = '0.1.0'.freeze
   end

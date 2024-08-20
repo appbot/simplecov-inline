@@ -136,3 +136,9 @@ RSpec/NestedGroups:
 
 RSpec/ExampleLength:
   CountAsOne: ['array', 'heredoc', 'method_call']
+
+RSpec/SpecFilePathFormat:
+  CustomTransform:
+    RuboCop: rubocop
+    RSpec: rspec
+    SimpleCov: simplecov
