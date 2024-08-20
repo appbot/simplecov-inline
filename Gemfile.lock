@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     simplecov-inline (0.1.0)
+      rainbow (~> 3.1)
       simplecov (~> 0.22)
 
 GEM
