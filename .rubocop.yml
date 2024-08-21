@@ -6,6 +6,7 @@ AllCops:
   Exclude:
     - 'bin/*'
     - 'vendor/bundle/**/*'
+    - 'spec/fixtures/**/*'
   NewCops: enable
   SuggestExtensions: false
 
@@ -142,3 +143,4 @@ RSpec/SpecFilePathFormat:
     RuboCop: rubocop
     RSpec: rspec
     SimpleCov: simplecov
+    RSpecFormatterSkipOnFailure: rspec_formatter_skip_on_failure

@@ -1,6 +1,6 @@
 require 'rainbow'
 
-module Simplecov
+module SimpleCov
   module Inline
     class Formatter
       Result = Struct.new(:file, :start_line, :end_line, :type) do
