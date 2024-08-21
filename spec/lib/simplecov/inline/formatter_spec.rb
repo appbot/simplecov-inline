@@ -1,4 +1,4 @@
-RSpec.describe Simplecov::Inline::Formatter do
+RSpec.describe SimpleCov::Inline::Formatter do
   after { described_class.reset_config }
 
   describe '#format' do
