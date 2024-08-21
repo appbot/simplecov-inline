@@ -14,6 +14,15 @@ RSpec.describe SimpleCov::Inline::Integration do
       allow(rspec_config).to receive(:add_formatter)
       allow(rspec_config).to receive(:before)
       allow(described_class).to receive(:configure_formatter)
+      allow(RSpec::Core::Formatters).to receive(:register)
+    end
+
+    it 'registers the rspec formatter' do
+      subject
+
+      expect(RSpec::Core::Formatters)
+        .to have_received(:register)
+        .with(SimpleCov::Inline::RSpecFormatterSkipOnFailure, :dump_failures)
     end
 
     it 'adds a formatter to the rspec config', :aggregate_failures do

@@ -3,6 +3,8 @@ module SimpleCov
     class Integration
       class << self
         def configure_rspec_rails(rspec: RSpec, rails: Rails)
+          RSpec::Core::Formatters.register SimpleCov::Inline::RSpecFormatterSkipOnFailure, :dump_failures
+
           rspec.configure do |rspec_config|
             rspec_config.add_formatter SimpleCov::Inline::RSpecFormatterSkipOnFailure
             rspec_config.before(:suite) do
