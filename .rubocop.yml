@@ -142,3 +142,4 @@ RSpec/SpecFilePathFormat:
     RuboCop: rubocop
     RSpec: rspec
     SimpleCov: simplecov
+    RSpecFormatterSkipOnFailure: rspec_formatter_skip_on_failure
