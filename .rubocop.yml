@@ -6,6 +6,7 @@ AllCops:
   Exclude:
     - 'bin/*'
     - 'vendor/bundle/**/*'
+    - 'spec/fixtures/**/*'
   NewCops: enable
   SuggestExtensions: false
 
