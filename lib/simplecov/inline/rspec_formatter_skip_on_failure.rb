@@ -1,8 +1,6 @@
 module SimpleCov
   module Inline
     class RSpecFormatterSkipOnFailure
-      RSpec::Core::Formatters.register self, :dump_failures
-
       def initialize(output)
         @output = output
       end
