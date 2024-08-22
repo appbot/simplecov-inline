@@ -1,8 +1,8 @@
 require 'rainbow'
 
 module SimpleCov
-  module Inline
-    class Formatter
+  module Formatter
+    class Inline
       Result = Struct.new(:file, :start_line, :end_line, :type) do
         def to_s
           lines = [start_line, end_line].uniq.join('-')
