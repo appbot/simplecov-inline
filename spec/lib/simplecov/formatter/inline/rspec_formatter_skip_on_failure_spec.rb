@@ -1,5 +1,5 @@
-RSpec.describe SimpleCov::Inline::RSpecFormatterSkipOnFailure do
-  after { SimpleCov::Inline::Formatter.reset_config }
+RSpec.describe SimpleCov::Formatter::Inline::RSpecFormatterSkipOnFailure do
+  after { SimpleCov::Formatter::Inline.reset_config }
 
   describe '#dump_failures' do
     subject { described_class.new(:output_arg_value_not_used).dump_failures(notification) }
@@ -14,7 +14,7 @@ RSpec.describe SimpleCov::Inline::RSpecFormatterSkipOnFailure do
 
       it 'supresses output' do
         expect { subject }
-          .to change { SimpleCov::Inline::Formatter.config.no_output }
+          .to change { SimpleCov::Formatter::Inline.config.no_output }
           .from(nil)
           .to('no examples were run')
       end
@@ -26,7 +26,7 @@ RSpec.describe SimpleCov::Inline::RSpecFormatterSkipOnFailure do
 
       it 'supresses output' do
         expect { subject }
-          .to change { SimpleCov::Inline::Formatter.config.no_output }
+          .to change { SimpleCov::Formatter::Inline.config.no_output }
           .from(nil)
           .to('some specs failed')
       end
@@ -37,7 +37,7 @@ RSpec.describe SimpleCov::Inline::RSpecFormatterSkipOnFailure do
       let(:failed_examples) { [] }
 
       it 'does not supress output' do
-        expect { subject }.not_to change { SimpleCov::Inline::Formatter.config.no_output }.from(nil)
+        expect { subject }.not_to change { SimpleCov::Formatter::Inline.config.no_output }.from(nil)
       end
     end
   end
